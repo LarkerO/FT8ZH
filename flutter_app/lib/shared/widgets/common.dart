@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 
+// ---------------------------------------------------------------------------
+// Shared reusable widgets
+// ---------------------------------------------------------------------------
+
+/// A simple intro card with a title and description.
 class SectionIntro extends StatelessWidget {
   const SectionIntro({
     super.key,
@@ -28,6 +33,7 @@ class SectionIntro extends StatelessWidget {
   }
 }
 
+/// A placeholder card with bullet-point lines.
 class PlaceholderCard extends StatelessWidget {
   const PlaceholderCard({super.key, required this.title, required this.lines});
 
@@ -62,6 +68,7 @@ class PlaceholderCard extends StatelessWidget {
   }
 }
 
+/// Compact key-value display chip.
 class MetricChip extends StatelessWidget {
   const MetricChip({super.key, required this.label, required this.value});
 
@@ -89,6 +96,7 @@ class MetricChip extends StatelessWidget {
   }
 }
 
+/// Connection status badge (dot + label, pill-shaped).
 class ConnectionBadge extends StatelessWidget {
   const ConnectionBadge({super.key, required this.label, required this.color});
 
@@ -109,8 +117,39 @@ class ConnectionBadge extends StatelessWidget {
         children: [
           Icon(Icons.circle, size: 10, color: color),
           const SizedBox(width: 6),
-          Text(label),
+          Text(label, style: TextStyle(color: color, fontSize: 13)),
         ],
+      ),
+    );
+  }
+}
+
+/// Simple empty-state placeholder.
+class EmptyState extends StatelessWidget {
+  const EmptyState({super.key, required this.icon, required this.message});
+
+  final IconData icon;
+  final String message;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(32),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(icon, size: 48, color: Theme.of(context).colorScheme.outline),
+            const SizedBox(height: 12),
+            Text(
+              message,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.outline,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
