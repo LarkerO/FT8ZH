@@ -49,22 +49,32 @@ class ConsoleController extends ChangeNotifier {
       _error = null;
       await _timerSub?.cancel();
       await _rigSub?.cancel();
-      _timerSub = NativeBridge.observeTimer().listen((timerState) {
-        _snapshot = ConsoleSnapshot(
-          rigState: _snapshot.rigState,
-          timerState: timerState,
-          messages: _snapshot.messages,
-        );
-        notifyListeners();
-      });
-      _rigSub = NativeBridge.observeRigState().listen((rigState) {
-        _snapshot = ConsoleSnapshot(
-          rigState: rigState,
-          timerState: _snapshot.timerState,
-          messages: _snapshot.messages,
-        );
-        notifyListeners();
-      });
+      _timerSub = NativeBridge.observeTimer().listen(
+        (timerState) {
+          _snapshot = ConsoleSnapshot(
+            rigState: _snapshot.rigState,
+            timerState: timerState,
+            messages: _snapshot.messages,
+          );
+          notifyListeners();
+        },
+        onError: (Object e) {
+          debugPrint('Timer stream error: $e');
+        },
+      );
+      _rigSub = NativeBridge.observeRigState().listen(
+        (rigState) {
+          _snapshot = ConsoleSnapshot(
+            rigState: rigState,
+            timerState: _snapshot.timerState,
+            messages: _snapshot.messages,
+          );
+          notifyListeners();
+        },
+        onError: (Object e) {
+          debugPrint('Rig state stream error: $e');
+        },
+      );
     } catch (e) {
       _error = e.toString();
     } finally {
