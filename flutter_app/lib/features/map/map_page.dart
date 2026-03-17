@@ -18,11 +18,7 @@ class MapPlaceholderPage extends StatelessWidget {
         SizedBox(height: 16),
         PlaceholderCard(
           title: '待接能力',
-          lines: [
-            'Maidenhead 网格展示',
-            '通联点位聚合',
-            '呼号详情抽屉',
-          ],
+          lines: ['Maidenhead 网格展示', '通联点位聚合', '呼号详情抽屉'],
         ),
       ],
     );

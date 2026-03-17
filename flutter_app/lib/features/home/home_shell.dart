@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../application/console_controller.dart';
 import '../../shared/widgets/common.dart';
 import '../console/console_page.dart';
 import '../logbook/logbook_page.dart';
@@ -7,7 +8,9 @@ import '../map/map_page.dart';
 import '../settings/settings_page.dart';
 
 class HomeShell extends StatefulWidget {
-  const HomeShell({super.key});
+  const HomeShell({super.key, required this.controller});
+
+  final ConsoleController controller;
 
   @override
   State<HomeShell> createState() => _HomeShellState();
@@ -16,11 +19,11 @@ class HomeShell extends StatefulWidget {
 class _HomeShellState extends State<HomeShell> {
   int _currentIndex = 0;
 
-  static const _pages = [
-    MainConsolePage(),
-    LogbookPage(),
-    MapPlaceholderPage(),
-    SettingsPlaceholderPage(),
+  late final List<Widget> _pages = [
+    MainConsolePage(controller: widget.controller),
+    const LogbookPage(),
+    const MapPlaceholderPage(),
+    const SettingsPlaceholderPage(),
   ];
 
   static const _destinations = [
@@ -32,34 +35,41 @@ class _HomeShellState extends State<HomeShell> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('FT8ZH'),
-        actions: const [
-          Padding(
-            padding: EdgeInsets.only(right: 16),
-            child: Center(
-              child: ConnectionBadge(
-                label: '未连接',
-                color: Colors.orange,
+    return AnimatedBuilder(
+      animation: widget.controller,
+      builder: (context, _) {
+        final rigState = widget.controller.snapshot.rigState;
+        final isConnected = rigState.isConnected;
+        final badgeColor = isConnected ? Colors.greenAccent : Colors.orange;
+        final badgeLabel = rigState.connectionLabel;
+
+        return Scaffold(
+          appBar: AppBar(
+            title: const Text('FT8ZH'),
+            actions: [
+              Padding(
+                padding: const EdgeInsets.only(right: 16),
+                child: Center(
+                  child: ConnectionBadge(label: badgeLabel, color: badgeColor),
+                ),
               ),
+            ],
+          ),
+          body: SafeArea(
+            child: AnimatedSwitcher(
+              duration: const Duration(milliseconds: 220),
+              child: _pages[_currentIndex],
             ),
           ),
-        ],
-      ),
-      body: SafeArea(
-        child: AnimatedSwitcher(
-          duration: const Duration(milliseconds: 220),
-          child: _pages[_currentIndex],
-        ),
-      ),
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: _currentIndex,
-        destinations: _destinations,
-        onDestinationSelected: (index) {
-          setState(() => _currentIndex = index);
-        },
-      ),
+          bottomNavigationBar: NavigationBar(
+            selectedIndex: _currentIndex,
+            destinations: _destinations,
+            onDestinationSelected: (index) {
+              setState(() => _currentIndex = index);
+            },
+          ),
+        );
+      },
     );
   }
 }

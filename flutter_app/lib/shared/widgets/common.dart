@@ -29,11 +29,7 @@ class SectionIntro extends StatelessWidget {
 }
 
 class PlaceholderCard extends StatelessWidget {
-  const PlaceholderCard({
-    super.key,
-    required this.title,
-    required this.lines,
-  });
+  const PlaceholderCard({super.key, required this.title, required this.lines});
 
   final String title;
   final List<String> lines;
@@ -67,11 +63,7 @@ class PlaceholderCard extends StatelessWidget {
 }
 
 class MetricChip extends StatelessWidget {
-  const MetricChip({
-    super.key,
-    required this.label,
-    required this.value,
-  });
+  const MetricChip({super.key, required this.label, required this.value});
 
   final String label;
   final String value;
@@ -98,11 +90,7 @@ class MetricChip extends StatelessWidget {
 }
 
 class ConnectionBadge extends StatelessWidget {
-  const ConnectionBadge({
-    super.key,
-    required this.label,
-    required this.color,
-  });
+  const ConnectionBadge({super.key, required this.label, required this.color});
 
   final String label;
   final Color color;
