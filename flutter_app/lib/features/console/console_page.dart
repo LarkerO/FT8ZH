@@ -149,6 +149,9 @@ class _SpectrumCard extends StatelessWidget {
     required this.isDecoding,
   });
 
+  /// Minimum visible height for a spectrum bar (fraction of container).
+  static const double _minBarHeight = 0.02;
+
   final List<double> bars;
   final TimerState timerState;
   final bool isListening;
@@ -212,7 +215,7 @@ class _SpectrumCard extends StatelessWidget {
                             child: Align(
                               alignment: Alignment.bottomCenter,
                               child: FractionallySizedBox(
-                                heightFactor: value.clamp(0.02, 1.0),
+                                heightFactor: value.clamp(_minBarHeight, 1.0),
                                 child: DecoratedBox(
                                   decoration: BoxDecoration(
                                     color: activeColor.withValues(alpha: 0.85),

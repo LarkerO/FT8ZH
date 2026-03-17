@@ -34,8 +34,11 @@ class _LogbookPageState extends State<LogbookPage> {
     super.dispose();
   }
 
+  static const double _paginationThreshold = 200.0;
+
   void _onScroll() {
-    if (_scrollController.position.extentAfter < 200 && !_controller.isBusy) {
+    if (_scrollController.position.extentAfter < _paginationThreshold &&
+        !_controller.isBusy) {
       _controller.loadMore();
     }
   }

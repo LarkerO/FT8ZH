@@ -70,7 +70,9 @@ class ConsoleController extends ChangeNotifier {
           notifyListeners();
         },
         onError: (Object e) {
-          debugPrint('Timer stream error: $e');
+          _error = 'Timer stream error: $e';
+          debugPrint(_error);
+          notifyListeners();
         },
       );
 
@@ -87,7 +89,9 @@ class ConsoleController extends ChangeNotifier {
           notifyListeners();
         },
         onError: (Object e) {
-          debugPrint('Rig state stream error: $e');
+          _error = 'Rig state stream error: $e';
+          debugPrint(_error);
+          notifyListeners();
         },
       );
 
@@ -104,7 +108,9 @@ class ConsoleController extends ChangeNotifier {
           notifyListeners();
         },
         onError: (Object e) {
-          debugPrint('Decode stream error: $e');
+          _error = 'Decode stream error: $e';
+          debugPrint(_error);
+          notifyListeners();
         },
       );
 
@@ -114,7 +120,9 @@ class ConsoleController extends ChangeNotifier {
           notifyListeners();
         },
         onError: (Object e) {
-          debugPrint('Spectrum stream error: $e');
+          _error = 'Spectrum stream error: $e';
+          debugPrint(_error);
+          notifyListeners();
         },
       );
     } catch (e) {

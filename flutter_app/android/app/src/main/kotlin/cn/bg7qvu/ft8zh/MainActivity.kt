@@ -201,6 +201,8 @@ class MainActivity : FlutterActivity() {
                 }
 
                 "queryLogs" -> {
+                    // Demo: in-memory filtering. Real implementation should use
+                    // indexed SQLite queries via DatabaseOpr for scalability.
                     val callsign = call.argument<String>("callsign")
                     val limit = call.argument<Int>("limit") ?: 50
                     val offset = call.argument<Int>("offset") ?: 0
@@ -461,15 +463,17 @@ class MainActivity : FlutterActivity() {
 
     private fun startDecodeFeed() {
         if (decodeRunnable != null) return
+        // FT8 slot length = 15s. Real implementation will use JNI decode callbacks.
+        val slotIntervalMs = 15_000L
         decodeRunnable = object : Runnable {
             override fun run() {
                 decodeSink?.success(generateDecodeMessages())
-                mainHandler.postDelayed(this, 15_000L) // every slot
+                mainHandler.postDelayed(this, slotIntervalMs)
             }
         }
-        // First push immediately, then every 15 s
+        // First push immediately, then every slot
         decodeSink?.success(generateDecodeMessages())
-        mainHandler.postDelayed(decodeRunnable!!, 15_000L)
+        mainHandler.postDelayed(decodeRunnable!!, slotIntervalMs)
     }
 
     private fun stopDecodeFeed() {
