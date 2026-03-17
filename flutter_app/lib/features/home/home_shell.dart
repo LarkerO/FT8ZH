@@ -7,6 +7,8 @@ import '../logbook/logbook_page.dart';
 import '../map/map_page.dart';
 import '../settings/settings_page.dart';
 
+/// Root shell with bottom navigation – mirrors the original MainActivity
+/// fragment navigation.
 class HomeShell extends StatefulWidget {
   const HomeShell({super.key, required this.controller});
 
@@ -22,8 +24,8 @@ class _HomeShellState extends State<HomeShell> {
   late final List<Widget> _pages = [
     MainConsolePage(controller: widget.controller),
     const LogbookPage(),
-    const MapPlaceholderPage(),
-    const SettingsPlaceholderPage(),
+    const MapPage(),
+    const SettingsPage(),
   ];
 
   static const _destinations = [
@@ -48,7 +50,7 @@ class _HomeShellState extends State<HomeShell> {
             title: const Text('FT8ZH'),
             actions: [
               Padding(
-                padding: const EdgeInsets.only(right: 16),
+                padding: const EdgeInsets.only(right: 12),
                 child: Center(
                   child: ConnectionBadge(label: badgeLabel, color: badgeColor),
                 ),
